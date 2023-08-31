@@ -1,9 +1,16 @@
+buildscript {
+    ext {
+        queryDslVersion = "5.0.0"
+    }
+}
+
 plugins {
     id 'java'
     id 'org.springframework.boot' version '2.7.12'
     id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+    // querydsl
+    id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
 }
-
 
 group = 'local.sihun'
 version = '0.0.1-SNAPSHOT'
@@ -44,6 +51,10 @@ dependencies {
     runtimeOnly 'com.h2database:h2'
     implementation group: 'com.mysql', name: 'mysql-connector-j', version: '8.0.33'
 
+    //querydsl 추가
+    implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
+    annotationProcessor "com.querydsl:querydsl-apt:${queryDslVersion}"
+
     // 기타
     implementation 'org.springdoc:springdoc-openapi-ui:1.6.12'
     implementation group: 'org.modelmapper', name: 'modelmapper', version: '3.1.1'
@@ -56,3 +67,21 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+
+//querydsl 추가 시작
+def querydslDir = "$buildDir/generated/querydsl"
+querydsl {
+    jpa = true
+    querydslSourcesDir = querydslDir
+}
+sourceSets {
+    main.java.srcDir querydslDir
+}
+configurations {
+    querydsl.extendsFrom compileClasspath
+}
+compileQuerydsl {
+    options.annotationProcessorPath = configurations.querydsl
+}
+//querydsl 추가 끝

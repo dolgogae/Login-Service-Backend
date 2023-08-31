@@ -7,6 +7,7 @@ import io.jsonwebtoken.security.Keys;
 import local.sihun.springsec.global.error.ErrorCode;
 import local.sihun.springsec.global.error.ErrorResponse;
 import local.sihun.springsec.global.error.exception.BusinessException;
+import local.sihun.springsec.security.CustomUserDetails;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;

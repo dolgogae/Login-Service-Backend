@@ -21,13 +21,19 @@ public enum ErrorCode {
     NEED_LOGIN(401, "M004", "need login"),
     AUTHENTICATION_NOT_FOUND(401, "M005", "Security Context에 인증 정보가 없습니다."),
     USER_ALREADY_LOGOUT(400, "M006", "member already logout"),
+    USER_ROLE_DOES_NOT_EXISTS(404, "M007", "member role does not exists"),
+    USER_ROLE_INVALID(404, "M008", "member role invalid"),
 
     // Auth
     REFRESH_TOKEN_INVALID(400, "A001", "refresh token invalid"),
     NO_ACCESS_TOKEN(404, "A002", "no access token"),
     TOKEN_EXPIRED(404, "A003", "token expired"),
     TOKEN_UNSUPPORTED(404, "A004", "token unsupported"),
-    TOKEN_ILLEGAL_ARGUMENT(404, "A004", "token illegal argument");
+    TOKEN_ILLEGAL_ARGUMENT(404, "A004", "token illegal argument"),
+
+    // Encrypt
+    ENCRYPTION_FAILED(400, "E001", "Encryption failed"),
+    DECRYPTION_FAILED(400, "E002", "Decryption failed");
 
     private int status;
     private final String code;

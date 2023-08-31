@@ -1,9 +1,11 @@
 package local.sihun.springsec.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import local.sihun.springsec.config.AES128Config;
 import local.sihun.springsec.domain.user.data.UserEntity;
 import local.sihun.springsec.domain.user.dto.UserDto;
 import local.sihun.springsec.domain.user.service.UserService;
+import local.sihun.springsec.security.CustomUserDetails;
 import local.sihun.springsec.security.jwt.JwtTokenProvider;
 import local.sihun.springsec.security.jwt.TokenDto;
 import lombok.RequiredArgsConstructor;
@@ -57,8 +59,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         String encryptedRefreshToken = aes128Config.encryptAes(refreshToken);
         jwtTokenProvider.accessTokenSetHeader(accessToken, response);
         jwtTokenProvider.refresshTokenSetHeader(encryptedRefreshToken, response);
-        UserEntity findUser = userService.findMemberAndCheckMemberExists(customUserDetails.getId());
-        Responder.loginSuccessResponse(response, findMember);
+        UserDto findUser = userService.findMemberAndCheckMemberExists(customUserDetails.getId());
+        log.info("login success = {}", findUser);
 
         // 로그인 성공시 Refresh Token Redis 저장 ( key = Email / value = Refresh Token )
         long refreshTokenExpirationMillis = jwtTokenProvider.getRefreshTokenExpirationMillis();

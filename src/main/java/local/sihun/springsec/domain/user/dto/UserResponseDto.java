@@ -1,5 +1,6 @@
 package local.sihun.springsec.domain.user.dto;
 
+import local.sihun.springsec.domain.user.UserRole;
 import lombok.*;
 
 import javax.validation.constraints.Email;
@@ -26,4 +27,6 @@ public class UserResponseDto {
     @NotBlank
     @Size(min = 2, message = "Password length must be greater than 2.")
     private String password;
+
+    private String role;
 }
