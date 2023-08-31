@@ -1,6 +1,5 @@
 package local.sihun.springsec.global.error;
 
-
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

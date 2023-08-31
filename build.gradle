@@ -34,7 +34,11 @@ dependencies {
     testImplementation 'org.springframework.security:spring-security-test'
 
     // JWT
-    implementation 'io.jsonwebtoken:jjwt:0.9.1'
+//    implementation 'io.jsonwebtoken:jjwt:0.9.1'
+    implementation "io.jsonwebtoken:jjwt-api:0.11.2"
+    runtimeOnly "io.jsonwebtoken:jjwt-jackson:0.11.2",
+            "io.jsonwebtoken:jjwt-impl:0.11.2",
+            "org.bouncycastle:bcprov-jdk15on:1.68"
 
     // DB
     runtimeOnly 'com.h2database:h2'
@@ -42,6 +46,7 @@ dependencies {
 
     // 기타
     implementation 'org.springdoc:springdoc-openapi-ui:1.6.12'
+    implementation group: 'org.modelmapper', name: 'modelmapper', version: '3.1.1'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'

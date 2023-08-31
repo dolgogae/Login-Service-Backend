@@ -39,3 +39,8 @@ springdoc:
 
 logging.level:
   org.hibernate.SQL: debug
+
+jwt:
+  access-token-expiration-millis: 360000
+  refresh-token-expiration-millis: 259200000
+  secret-key: e08edbea6605f4444156ac860207e8cd248b1588b2da84f94a2201416d2d617b5833be559202bfd2c316d69a15cae063fd419f222a4bae9d8586ab4f155e2078
