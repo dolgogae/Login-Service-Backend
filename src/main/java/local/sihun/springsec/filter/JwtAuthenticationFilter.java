@@ -1,10 +1,10 @@
 package local.sihun.springsec.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import local.sihun.springsec.config.AES128Config;
-import local.sihun.springsec.domain.user.data.UserEntity;
+import local.sihun.springsec.global.config.AES128Config;
 import local.sihun.springsec.domain.user.dto.UserDto;
 import local.sihun.springsec.domain.user.service.UserService;
+import local.sihun.springsec.redis.RedisUtils;
 import local.sihun.springsec.security.CustomUserDetails;
 import local.sihun.springsec.security.jwt.JwtTokenProvider;
 import local.sihun.springsec.security.jwt.TokenDto;
@@ -32,7 +32,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     private final JwtTokenProvider jwtTokenProvider;
     private final AES128Config aes128Config;
     private final UserService userService;
-    private final RedisService redisService;
+    private final RedisUtils redisUtils;
 
     @SneakyThrows
     @Override
@@ -64,7 +64,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         // 로그인 성공시 Refresh Token Redis 저장 ( key = Email / value = Refresh Token )
         long refreshTokenExpirationMillis = jwtTokenProvider.getRefreshTokenExpirationMillis();
-        redisService.setValues(findUser.getEmail(), refreshToken, Duration.ofMillis(refreshTokenExpirationMillis));
+        redisUtils.setData(findUser.getEmail(), refreshToken, refreshTokenExpirationMillis);
 
         this.getSuccessHandler().onAuthenticationSuccess(request, response, authResult);
     }

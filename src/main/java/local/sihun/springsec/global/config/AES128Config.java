@@ -1,4 +1,4 @@
-package local.sihun.springsec.config;
+package local.sihun.springsec.global.config;
 
 import local.sihun.springsec.global.error.ErrorCode;
 import local.sihun.springsec.global.error.exception.BusinessException;
