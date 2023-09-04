@@ -13,7 +13,7 @@ import static local.sihun.springsec.domain.user.UserRole.*;
 @Slf4j
 public class CustomAuthorityUtils {
     public static List<GrantedAuthority> createAuthorities(String role) {
-        return List.of(new SimpleGrantedAuthority("ROLE_" + role));
+        return List.of(new SimpleGrantedAuthority(role));
     }
 
     public static void verifiedRole(String role) {

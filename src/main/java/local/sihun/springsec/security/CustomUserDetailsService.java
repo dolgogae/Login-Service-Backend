@@ -21,9 +21,11 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return userJpaRepository.findByEmail(email)
+        UserDetails userDetails = userJpaRepository.findByEmail(email)
                 .map(this::createUserDetails)
                 .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_EXIST));
+        log.info(userDetails.toString());
+        return userDetails;
     }
 
     private UserDetails createUserDetails(UserEntity user) {

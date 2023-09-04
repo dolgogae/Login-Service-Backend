@@ -40,9 +40,9 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                                 HttpServletResponse response) throws AuthenticationException {
         // ServletInputStream을 LoginDto 객체로 역직렬화
         ObjectMapper objectMapper = new ObjectMapper();
-        UserDto loginDto = objectMapper.readValue(request.getInputStream(), UserDto.class);
+        UserDto userDto = objectMapper.readValue(request.getInputStream(), UserDto.class);
         UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword());
+                new UsernamePasswordAuthenticationToken(userDto.getEmail(), userDto.getPassword());
 
         return authenticationManager.authenticate(authenticationToken);
     }
