@@ -30,14 +30,14 @@ public class UserEntity {
 
     @Column(name = "ROLE")
     @Enumerated(value = EnumType.STRING)
-    private UserRole role;
+    private UserRole userRole;
 
     @Builder
     private UserEntity(String username, String email, String password, UserRole userRole) {
         this.username = username;
         this.email = email;
         this.password = password;
-        this.role = userRole;
+        this.userRole = userRole;
     }
 
     public static UserEntity create(UserDto userDto){

@@ -53,7 +53,8 @@ public class SecurityConfig {
                                 "/h2-console",
                                 "/login/**",
                                 "/swagger-ui/**",
-                                "/swagger-ui.html").permitAll()
+                                "/swagger-ui.html",
+                                "/auth/**").permitAll()
                         .antMatchers("/user/**").hasAnyRole("ADMIN", "USER", "ANONYMOUS")
                         .antMatchers("/admin/**").hasAnyRole("ADMIN")
                 )

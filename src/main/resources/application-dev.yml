@@ -1,0 +1,49 @@
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    url: jdbc:mysql://localhost:3306/security_db
+    username: root
+    password: dhtlgns731!
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create # or create-drop, validate, none (choose appropriate)
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+        format_sql: true
+  redis:
+    port: 6379
+    host: 127.0.0.1
+  cache:
+    type: redis
+
+# Swagger springdoc-ui Configuration
+springdoc:
+  packages-to-scan: local.sihun.springsec
+  default-consumes-media-type: application/json;charset=UTF-8
+  default-produces-media-type: application/json;charset=UTF-8
+  swagger-ui:
+    path: swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    path: /api-docs/json
+    groups:
+      enabled: true
+  cache:
+    disabled: true
+
+logging.level:
+  org.hibernate.SQL: debug
+
+jwt:
+  access-token-expiration-millis: 360000
+  refresh-token-expiration-millis: 259200000
+  secret-key: e08edbea6605f4444156ac860207e8cd248b1588b2da84f94a2201416d2d617b5833be559202bfd2c316d69a15cae063fd419f222a4bae9d8586ab4f155e2078
+
+aes:
+  secret-key: 6dee66ecc416d128993ccb10534dcba7
+

@@ -1,6 +1,7 @@
 package local.sihun.springsec.domain.user.service;
 
 import local.sihun.springsec.domain.user.UserMappingProvider;
+import local.sihun.springsec.domain.user.UserRole;
 import local.sihun.springsec.domain.user.data.UserEntity;
 import local.sihun.springsec.domain.user.dto.UserDto;
 import local.sihun.springsec.domain.user.repository.UserJpaRepository;
@@ -20,7 +21,14 @@ public class UserServiceImplV1 implements UserService{
 
     @Override
     public UserDto createUser(UserDto userDto) {
-        return null;
+        userDto.setRole(UserRole.ANONYMOUS.name());
+        UserEntity userEntity = UserEntity.create(userDto);
+        UserEntity savedUser = userJpaRepository.save(userEntity);
+
+        UserDto result = userMappingProvider.userEntityToUserDto(savedUser);
+        log.info(result.toString());
+
+        return result;
     }
 
     @Override
