@@ -1,5 +1,10 @@
 package local.sihun.springsec.domain.auth;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import local.sihun.springsec.domain.user.UserMappingProvider;
 import local.sihun.springsec.domain.user.dto.UserDto;
 import local.sihun.springsec.domain.user.dto.UserRequestDto;
@@ -24,6 +29,11 @@ public class AuthController {
     private final UserMappingProvider userMappingProvider;
     private final PasswordEncoder passwordEncoder;
 
+    @Operation(summary = "회원가입(sign-in)", description = "회원가입을 위한 API")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "회원가입 성공",
+                    content = @Content(schema = @Schema(implementation = UserRequestDto.class)))
+    })
     @PostMapping("/sign-in")
     public ResponseEntity<ResultResponse> signIn(
             @RequestBody UserRequestDto request
@@ -42,6 +52,7 @@ public class AuthController {
         return new ResponseEntity<>(result, HttpStatus.valueOf(result.getStatus()));
     }
 
+    @Operation(summary = "JWT 로그인 성공 콜백 함수", description = "JWT 로그인 이후 성공 콜백 함수 - 현재 front 미구현으로 구현중인 상태")
     @GetMapping("/login/callback")
     public String loginCallback(
             @RequestParam String accessToken, @RequestParam String refreshToken
