@@ -20,33 +20,41 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         if(authentication == null){
+            log.info("Authentication is null");
             throw new InternalAuthenticationServiceException("Authentication is null");
         }
         String username = authentication.getName();
         if(authentication.getCredentials() == null){
+            log.info("Credentials is null");
             throw new AuthenticationCredentialsNotFoundException("Credentials is null");
         }
         String password = authentication.getCredentials().toString();
         UserDetails loadedUser = customUserDetailsService.loadUserByUsername(username);
         if(loadedUser == null){
+            log.info("UserDetailsService returned null, which is an interface contract violation");
             throw new InternalAuthenticationServiceException("UserDetailsService returned null, which is an interface contract violation");
         }
         /* checker */
         if(!loadedUser.isAccountNonLocked()){
+            log.info("User account is locked");
             throw new LockedException("User account is locked");
         }
         if(!loadedUser.isEnabled()){
+            log.info("User is disabled");
             throw new DisabledException("User is disabled");
         }
         if(!loadedUser.isAccountNonExpired()){
+            log.info("User account has expired");
             throw new AccountExpiredException("User account has expired");
         }
         /* 실질적인 인증 */
         if(!passwordEncoder.matches(password, loadedUser.getPassword())){
+            log.info("Password does not match stored value");
             throw new BadCredentialsException("Password does not match stored value");
         }
         /* checker */
         if(!loadedUser.isCredentialsNonExpired()){
+            log.info("User credentials have expired");
             throw new CredentialsExpiredException("User credentials have expired");
         }
         /* 인증 완료 */

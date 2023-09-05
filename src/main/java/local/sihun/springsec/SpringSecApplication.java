@@ -10,7 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @EnableCaching
-@SpringBootApplication(exclude={SecurityAutoConfiguration.class})
+@SpringBootApplication//(exclude={SecurityAutoConfiguration.class})
 public class SpringSecApplication {
 
     public static void main(String[] args) {

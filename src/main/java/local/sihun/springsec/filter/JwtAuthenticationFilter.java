@@ -22,7 +22,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.time.Duration;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -57,9 +56,12 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         String accessToken = tokenDto.getAccessToken();
         String refreshToken = tokenDto.getRefreshToken();
         String encryptedRefreshToken = aes128Config.encryptAes(refreshToken);
+
         jwtTokenProvider.accessTokenSetHeader(accessToken, response);
         jwtTokenProvider.refresshTokenSetHeader(encryptedRefreshToken, response);
-        UserDto findUser = userService.findMemberAndCheckMemberExists(customUserDetails.getId());
+
+        UserDto findUser = userService
+                .findUserAndUpdateTokens(customUserDetails.getId(), accessToken, refreshToken);
         log.info("login success = {}", findUser);
 
         // 로그인 성공시 Refresh Token Redis 저장 ( key = Email / value = Refresh Token )

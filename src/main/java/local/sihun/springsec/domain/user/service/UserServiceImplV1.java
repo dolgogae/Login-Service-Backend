@@ -47,11 +47,14 @@ public class UserServiceImplV1 implements UserService{
     }
 
     @Override
-    public UserDto findMemberAndCheckMemberExists(Long id) {
+    public UserDto findUserAndUpdateTokens(Long id, String accessToken, String refreshToken) {
         UserEntity user = userJpaRepository.findById(id).orElseThrow(() ->
                 new BusinessException(ErrorCode.USER_NOT_EXIST));
+        user.setTokens(accessToken, refreshToken);
 
-        UserDto userDto = userMappingProvider.userEntityToUserDto(user);
+        UserEntity savedUser = userJpaRepository.save(user);
+
+        UserDto userDto = userMappingProvider.userEntityToUserDto(savedUser);
 
         return userDto;
     }

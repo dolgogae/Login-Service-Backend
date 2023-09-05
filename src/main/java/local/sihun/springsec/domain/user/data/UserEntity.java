@@ -32,6 +32,12 @@ public class UserEntity {
     @Enumerated(value = EnumType.STRING)
     private UserRole userRole;
 
+    @Column(name = "ACCESS_TOKEN", length = 2000)
+    private String accessToken;
+
+    @Column(name = "REFRESH_TOKEN", length = 2000)
+    private String refreshToken;
+
     @Builder
     private UserEntity(String username, String email, String password, UserRole userRole) {
         this.username = username;
@@ -47,5 +53,11 @@ public class UserEntity {
                 .password(userDto.getPassword())
                 .userRole(UserRole.valueOf(userDto.getRole()))
                 .build();
+    }
+
+    public UserEntity setTokens(String accessToken, String refreshToken){
+        this.accessToken = accessToken;
+        this.refreshToken = refreshToken;
+        return this;
     }
 }
