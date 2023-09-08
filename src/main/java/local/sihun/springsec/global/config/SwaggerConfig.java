@@ -1,4 +1,4 @@
-package local.sihun.springsec.config;
+package local.sihun.springsec.global.config;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
