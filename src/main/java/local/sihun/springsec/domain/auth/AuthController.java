@@ -46,17 +46,29 @@ public class AuthController {
 
         log.info("create user = {}", user.toString());
 
-        UserResponseDto userResponseDto = userMappingProvider.userDtoToResponseDto(user);
+        UserResponseDto responseDto = userMappingProvider.userDtoToResponseDto(user);
 
-        ResultResponse result = ResultResponse.of(ResultCode.REGISTER_SUCCESS, userResponseDto);
+        ResultResponse result = ResultResponse.of(ResultCode.REGISTER_SUCCESS, responseDto);
         return new ResponseEntity<>(result, HttpStatus.valueOf(result.getStatus()));
     }
 
-    @Operation(summary = "JWT 로그인 성공 콜백 함수", description = "JWT 로그인 이후 성공 콜백 함수 - 현재 front 미구현으로 구현중인 상태")
+    @Operation(summary = "JWT 로그인 성공 콜백 함수", description = "JWT 로그인 이후 성공 콜백 함수")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "로그인 성공",
+                    content = @Content(schema = @Schema(implementation = TokenDto.class)))
+    })
     @GetMapping("/login/callback")
-    public String loginCallback(
+    public ResponseEntity<ResultResponse> loginCallback(
             @RequestParam String accessToken, @RequestParam String refreshToken
     ){
-        return refreshToken;
+        TokenDto tokenDto = TokenDto.builder()
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .build();
+
+        log.info(tokenDto.toString());
+
+        ResultResponse result = ResultResponse.of(ResultCode.REGISTER_SUCCESS, tokenDto);
+        return new ResponseEntity<>(result, HttpStatus.valueOf(result.getStatus()));
     }
 }

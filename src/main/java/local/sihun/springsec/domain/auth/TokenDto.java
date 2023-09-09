@@ -1,4 +1,4 @@
-package local.sihun.springsec.security.jwt;
+package local.sihun.springsec.domain.auth;
 
 import lombok.Builder;
 import lombok.Data;

@@ -4,6 +4,7 @@ import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.io.Encoders;
 import io.jsonwebtoken.security.Keys;
+import local.sihun.springsec.domain.auth.TokenDto;
 import local.sihun.springsec.global.error.ErrorCode;
 import local.sihun.springsec.global.error.ErrorResponse;
 import local.sihun.springsec.global.error.exception.BusinessException;
@@ -134,6 +135,29 @@ public class JwtTokenProvider {
             ErrorResponse.of(ErrorCode.TOKEN_ILLEGAL_ARGUMENT);
         }
         return true;
+    }
+
+    public Claims validateAndParseToken(String token) {
+        Claims result = null;
+        try {
+            result = parseClaims(token);
+        } catch (MalformedJwtException e) {
+            log.info("Invalid JWT token");
+            log.trace("Invalid JWT token trace = {}", e);
+        } catch (ExpiredJwtException e) {
+            log.info("Expired JWT token");
+            log.trace("Expired JWT token trace = {}", e);
+            ErrorResponse.of(ErrorCode.TOKEN_EXPIRED);
+        } catch (UnsupportedJwtException e) {
+            log.info("Unsupported JWT token");
+            log.trace("Unsupported JWT token trace = {}", e);
+            ErrorResponse.of(ErrorCode.TOKEN_UNSUPPORTED);
+        } catch (IllegalArgumentException e) {
+            log.info("JWT claims string is empty.");
+            log.trace("JWT claims string is empty trace = {}", e);
+            ErrorResponse.of(ErrorCode.TOKEN_ILLEGAL_ARGUMENT);
+        }
+        return result;
     }
 
     private Date getTokenExpiration(long expirationMillisecond) {

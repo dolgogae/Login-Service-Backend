@@ -37,8 +37,15 @@ public class UserServiceImplV1 implements UserService{
     }
 
     @Override
-    public UserDto getUser(UserDto userDto) {
-        return null;
+    public UserDto getUser(String email) {
+
+        UserEntity userEntity = userJpaRepository.findByEmail(email).orElseThrow(() ->
+                new BusinessException(ErrorCode.USER_NOT_EXIST));
+
+        UserDto result = userMappingProvider.userEntityToUserDto(userEntity);
+        log.info("get User = {}", result);
+
+        return result;
     }
 
     @Override

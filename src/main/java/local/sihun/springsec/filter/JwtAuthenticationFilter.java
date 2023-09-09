@@ -7,7 +7,7 @@ import local.sihun.springsec.domain.user.service.UserService;
 import local.sihun.springsec.redis.RedisUtils;
 import local.sihun.springsec.security.CustomUserDetails;
 import local.sihun.springsec.security.jwt.JwtTokenProvider;
-import local.sihun.springsec.security.jwt.TokenDto;
+import local.sihun.springsec.domain.auth.TokenDto;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
