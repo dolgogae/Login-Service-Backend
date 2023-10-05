@@ -22,6 +22,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -62,8 +63,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         UserDto findUser = userService
                 .findUserAndUpdateTokens(customUserDetails.getId(), accessToken, refreshToken);
-        log.info("login success = {}", findUser);
 
+        // redisTemplate.opsForValue().set(key, value, expiredTime, TimeUnit.MILLISECONDS);
         // 로그인 성공시 Refresh Token Redis 저장 ( key = Email / value = Refresh Token )
         long refreshTokenExpirationMillis = jwtTokenProvider.getRefreshTokenExpirationMillis();
         redisUtils.setData(findUser.getEmail(), refreshToken, refreshTokenExpirationMillis);

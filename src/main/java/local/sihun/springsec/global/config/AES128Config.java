@@ -48,7 +48,7 @@ public class AES128Config {
         }
     }
 
-    // AES 복호화
+    // AES 해독
     public String decryptAes(String plaintext) {
         try {
             cipher.init(Cipher.DECRYPT_MODE, secretKeySpec, ivParameterSpec);

@@ -71,4 +71,5 @@ public class AuthController {
         ResultResponse result = ResultResponse.of(ResultCode.REGISTER_SUCCESS, tokenDto);
         return new ResponseEntity<>(result, HttpStatus.valueOf(result.getStatus()));
     }
+
 }
